@@ -9,6 +9,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 import { useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
+import { CreateTagForm } from './components/create-tag-form'
 
 // https://transform.tools/json-to-typescript
 // copia o json de http://localhost:3333/tags?_page=1&_per_page=200 no site transform
@@ -87,7 +88,7 @@ export function App() {
 
             <Dialog.Portal>
               <Dialog.Overlay className='fixed inset-0 bg-black/70' />
-              <Dialog.Content className='fixed p-10 top-0 right-0 botton-0 h-screen min-w-[320px] bg-zinc-950 border-l border-zinc-900'>
+              <Dialog.Content className='fixed p-10 space-y-10 top-0 right-0 botton-0 h-screen min-w-[320px] bg-zinc-950 border-l border-zinc-900'>
                 <div className='space-y-3'>
                   <Dialog.Title className='text-xl font-bold'>Create tag</Dialog.Title>
                   <Dialog.Description className='text-sm text-zinc-500'>
@@ -95,9 +96,7 @@ export function App() {
                   </Dialog.Description>
                 </div>
 
-                
-
-                <Dialog.Close />
+                <CreateTagForm />
               </Dialog.Content>
             </Dialog.Portal>
           </Dialog.Root>
