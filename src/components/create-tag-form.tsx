@@ -6,14 +6,23 @@ import { Button } from './ui/button'
 import * as Dialog from '@radix-ui/react-dialog'
 
 const createTagSchema = z.object({
-  name: z.string().min(3, { message: ''}),
+  title: z.string().min(3, { message: 'Minimum 3 characters.' }),
   slug: z.string()
 })
 
 type CreateTagSchema = z.infer<typeof createTagSchema>
 
+function getSlugFromString(input: string): string {
+  return input
+    .normalize('NFD') // remove acentos
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^\w\s]/g, '') // troca o q não é palavra por vazio
+    .replace(/\s+/g, '-')   // troca espaços por -
+}
+
 export function CreateTagForm() {
-  const { register, handleSubmit } = useForm<CreateTagSchema>({
+  const { register, handleSubmit, watch } = useForm<CreateTagSchema>({
     resolver: zodResolver(createTagSchema)
   })
   
@@ -21,15 +30,17 @@ export function CreateTagForm() {
     console.log(data)
   }
 
+  const slug = watch('title') ? getSlugFromString(watch('title')) : ''
+
   return (
     <form onSubmit={handleSubmit(createTag)} className='w-full space-y-6'>
       <div className='space-y-2'>
-        <label className='text-sm font-medium block' htmlFor='name'>
+        <label className='text-sm font-medium block' htmlFor='title'>
           Tag name
         </label>
         <input
-          {...register('name')}
-          id='name'
+          {...register('title')}
+          id='title'
           type='text'
           className='w-full border border-zinc-800 rounded-lg px-3 py-2.5 bg-zinc-800/50 text-sm'
         />
@@ -44,6 +55,7 @@ export function CreateTagForm() {
           id='slug'
           type='text'
           readOnly
+          value={slug}
           className='w-full border border-zinc-800 rounded-lg px-3 py-2.5 bg-zinc-800/50 text-sm'
         />
       </div>
