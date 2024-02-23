@@ -110,5 +110,5 @@ export function CreateTagForm() {
         </Button>
       </div>
     </form>
-  );
+  )
 }
