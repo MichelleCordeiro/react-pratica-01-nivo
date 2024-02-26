@@ -3,7 +3,14 @@ import { Header } from './components/header'
 import { Tabs } from './components/tabs'
 import { Button } from './components/ui/button'
 import { Control, Input } from './components/ui/input'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './components/ui/table'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from './components/ui/table'
 import { Pagination } from './components/pagination'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
@@ -32,17 +39,19 @@ export interface Tag {
 
 export function App() {
   const [searchParams, setSearchParams] = useSearchParams()
-  
+
   const urlFilter = searchParams.get('filter') ?? ''
   const [filter, setFilter] = useState(urlFilter)
-  
+
   const page = searchParams.get('page') ? Number(searchParams.get('page')) : 1
-  
+
+  const perPage = searchParams.get('perPage') ? Number(searchParams.get('perPage')) : 10
+
   const { data: tagsResponse, isLoading } = useQuery<TagResponse>({
     queryKey: ['get-tags', urlFilter, page],
     queryFn: async () => {
       const response = await fetch(
-        `http://localhost:3333/tags?_page=${page}&_per_page=10&title=${urlFilter}`
+        `http://localhost:3333/tags?_page=${page}&_per_page=${perPage}&title=${urlFilter}`
       )
       const data = await response.json()
 
@@ -70,7 +79,7 @@ export function App() {
   }
 
   return (
-    <div className='py-10 space-y-8'>
+    <div className='px-20 py-10 space-y-8 '>
       <div>
         <Header />
         <Tabs />
@@ -80,11 +89,11 @@ export function App() {
         <div className='flex items-center gap-3'>
           <h1 className='text-xl font-bold'>Tags</h1>
           <Dialog.Root>
-            <Dialog.Trigger asChild>
-              <Button variant='primary'>
-                <Plus className='size-3' />
-                Create new
-              </Button>
+            <Dialog.Trigger className='disabled:opacity-50 inline-flex items-center gap-1.5 text-xs font-medium py-1 px-2 rounded-full bg-teal-400 text-teal-950 hover:bg-teal-500'>
+              {/* <Button variant='primary'> */}
+              <Plus className='size-3' />
+              Create new
+              {/* </Button> */}
             </Dialog.Trigger>
 
             <Dialog.Portal>
@@ -115,7 +124,10 @@ export function App() {
               />
             </Input>
 
-            <Button onClick={handleFilter}>
+            <Button
+              onClick={handleFilter}
+              className='bg-teal-700 hover:bg-teal-700/80 text-zinc-50 text-xs font-medium'
+            >
               <Filter className='size-3' />
               Filter
             </Button>
@@ -129,7 +141,7 @@ export function App() {
 
         <Table>
           <TableHeader>
-            <TableRow>
+            <TableRow className='bg-zinc-800'>
               <TableHead></TableHead>
               <TableHead>Tag</TableHead>
               <TableHead>Amount of videos</TableHead>
@@ -155,15 +167,20 @@ export function App() {
                     </Button>
                   </TableCell>
                 </TableRow>
-              )
+              );
             })}
           </TableBody>
         </Table>
 
         {tagsResponse && (
-          <Pagination pages={tagsResponse.pages} items={tagsResponse.items} page={page} />
+          <Pagination
+            pages={tagsResponse.pages}
+            items={tagsResponse.items}
+            page={page}
+            perPage={perPage}
+          />
         )}
       </main>
     </div>
-  )
+  );
 }

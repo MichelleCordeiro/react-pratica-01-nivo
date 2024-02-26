@@ -8,64 +8,86 @@ interface PaginationProps {
   pages: number
   items: number
   page: number
+  perPage: number
 }
 
-export function Pagination({ items, page, pages }: PaginationProps) {
-  const [, setSearchParams] = useSearchParams();
+export function Pagination({ items, page, pages, perPage }: PaginationProps) {
+  console.log('perPage: ', perPage)
+
+  const [, setSearchParams] = useSearchParams()
 
   function firstPage() {
     setSearchParams(params => {
-      params.set('page', '1');
+      params.set('page', '1')
 
-      return params;
-    });
+      return params
+    })
   }
 
   function previousPage() {
     if (page - 1 <= 0) {
-      return;
+      return
     }
 
     setSearchParams(params => {
-      params.set('page', String(page - 1));
+      params.set('page', String(page - 1))
 
-      return params;
-    });
+      return params
+    })
   }
 
   function nextPage() {
     if (page + 1 > pages) {
-      return;
+      return
     }
 
     setSearchParams(params => {
-      params.set('page', String(page + 1));
+      params.set('page', String(page + 1))
 
-      return params;
-    });
+      return params
+    })
   }
 
   function lastPage() {
     setSearchParams(params => {
-      params.set('page', String(pages));
+      params.set('page', String(pages))
 
-      return params;
-    });
+      return params
+    })
   }
 
+  function setItemsPerPage(amount: string) {
+    clearCacheData()
+
+    setSearchParams(params => {
+      params.set('perPage', amount)
+
+      return params
+    })
+  }
+
+  const clearCacheData = () => {
+    caches.keys().then(names => {
+      names.forEach(name => {
+        caches.delete(name)
+      })
+    })
+    // alert('Complete Cache Cleared')
+  }
+  
   return (
     <div className='flex text-sm items-center justify-between text-zinc-500'>
-      <span>Showing 10 of {items} items</span>
+      <span>Showing {perPage} of {items} items</span>
       <div className='flex items-center gap-8'>
         <div className='flex items-center gap-2'>
           <span>Rows per page</span>
 
-          <Select defaultValue='10'>
+          <Select value={String(perPage)} onValueChange={setItemsPerPage}>
             <SelectTrigger aria-label='Page' />
             <SelectContent>
-              <SelectItem value='20'>20</SelectItem>
-              <SelectItem value='50'>50</SelectItem>
+              <SelectItem value='5'>5</SelectItem>
               <SelectItem value='10'>10</SelectItem>
+              <SelectItem value='20'>20</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -94,5 +116,5 @@ export function Pagination({ items, page, pages }: PaginationProps) {
         </div>
       </div>
     </div>
-  );
+  )
 }
