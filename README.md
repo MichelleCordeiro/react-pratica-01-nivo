@@ -13,8 +13,7 @@
 
   <br><br>
 
-  <!-- <img src="https://i.postimg.cc/BvXFjy07/notes-print.png" alt="NLW Expert Notes" title="App Notes" width="800"> -->
-  <img src="https://i.postimg.cc/XJvSJTG0/capa-nivo.png" alt="NLW Expert Notes" title="App Notes" width="800">
+  <img src="https://i.postimg.cc/8zt5jmhf/capa-uploads.png" alt="NLW Expert Notes" title="App Notes" width="900">
   <!-- <video controls src="https://github.com/MichelleCordeiro/nlw-expert-react-notes/assets/42891377/27842410-bae5-4d2e-96ca-3c512a9792fe" title="App Notes" width="900"></video> -->
 </div>
 
@@ -23,10 +22,11 @@
 <!-- Infos session -->
 <h3> 💻 Projeto </h3>
 
-&emsp; &emsp; Esse projeto é uma aplicação web para catalogar produtos com categorias, desenvolvido em React utilizando Typescript, TailwindCSS, 
-Radix/ui, Shadcn/ui, React Query, React Hook Form, React Router DOM...
+&emsp; &emsp; Esse projeto é uma aplicação web para catalogar produtos em categorias. Foi desenvolvido em React utilizando Typescript, TailwindCSS, Radix/ui, React Query, React Hook Form, React Router DOM, Tanstack...
 
-<!-- &emsp; &emsp; Aplicação está disponível <a href="https://nlw-notes-eta.vercel.app/" target="_blank">aqui</a> -->
+&emsp; &emsp; 🚧 Em desenvolvimento: apenas a tela Upload foi desenvolvida parcialmente, implementados a criação de nova tag, o search/filter e a paginação.
+
+&emsp; &emsp; 🌐 Aplicação está disponível <a href="https://react-pratica-01-nivo.vercel.app/" target="_blank">aqui</a>
 
 <br>
 
@@ -41,8 +41,9 @@ Radix/ui, Shadcn/ui, React Query, React Hook Form, React Router DOM...
   <code><img height="20" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/typescript/typescript.png" alt="TypeScript"> TypeScript</code>
   <code><img height="21" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/tailwind/tailwind.png" alt="TailWind"> TailWindCSS</code>
   <code><img height="18" src="https://i.postimg.cc/XJVxTxBT/radix.png" alt="Radix"> Radix UI</code>
-  <code><img height="21" src="https://i.postimg.cc/hj0Y9Mm1/shadcn.png" alt="Radix"> Shadcn UI</code>
+  <!-- <code><img height="21" src="https://i.postimg.cc/hj0Y9Mm1/shadcn.png" alt="Radix"> Shadcn UI</code> -->
   <code><img height="22" src="https://i.postimg.cc/NMDYcNJT/logo-lucide.png" alt="Lucide React"> Lucide React</code>
+  <code><img height="21" src="https://i.postimg.cc/bvzkP1GJ/tanstack-logo-2.png" alt="Tanstack"> Tanstack</code>
   <code><img height="21" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/visual-studio-code/visual-studio-code.png" alt="VS Code"> VS Code</code>
 </p>
 
@@ -56,8 +57,9 @@ Radix/ui, Shadcn/ui, React Query, React Hook Form, React Router DOM...
 - [TypeScript](https://www.typescriptlang.org/) - superset de JavaScript que adiciona tipagem estática ao código
 - [Tailwind](https://tailwindcss.com/) - framework de estilização
 - [Radix UI](https://radix-ui.com/) - biblioteca de componentes 
-- [Shadcn UI](https://ui.shadcn.com/) - biblioteca de componentes 
+- [Tanstack](https://tanstack.com/query/v3/) - biblioteca que facilita o trabalho com consultas, roteamento, tabela, formulário...  
 - [Lucide React](https://lucide.dev/) - biblioteca de ícones 
+<!-- - [Shadcn UI](https://ui.shadcn.com/) - biblioteca de componentes  -->
 
 <br>
 
@@ -70,23 +72,24 @@ Radix/ui, Shadcn/ui, React Query, React Hook Form, React Router DOM...
       <li>CSS</li>
       <li>JavaScript</li>
       <li>React</li>
+    </td>
+    <td>
       <li>TypeScript</li>
       <li>Tailwind</li>
+      <li>Radix-ui (select + dialog)</li>
+      <li>Lucide react</li>
     </td>
     <td>
-      <li>Radix-ui + select</li>
-      <li>Shadcn-ui</li>
-      <li>Lucide react</li>
-      <li>React Query</li>
+      <li>React Query: mutation</li>
       <li>React Hook Form</li>
       <li>React Router DOM</li>
+      <li>JSON-server</li>
     </td>
     <td>
+      <li>Tanstack</li>
       <li>Componetização</li>
       <li>Desestruturação</li>
-      <li>Responsividade</li>
       <li>Acessibilidade</li>
-      <li>Deploy na Vercel</li>
     </td>
   </tr>
 </table>
@@ -107,7 +110,9 @@ You can see the project online here.
 ├── 📁 public: arquivos públicos
 ├── 📁 src: arquivos do projeto
 │   ├── 📁 assets: arquivo de imagem
-│   ├── 📁 components: pasta com componentes da aplicaçã0
+│   ├── 📁 components: componentes da aplicação
+│   |   |── 📁 ui: componentes prontos
+│   │   ├── create-tag-form.tsx: componente de criação de tag
 │   │   ├── header.tsx: componente do header
 │   │   ├── pagination.tsx: componente da paginação
 │   │   ├── tabs.tsx: componente da tabela
@@ -115,6 +120,8 @@ You can see the project online here.
 │   ├── index.css: arquivo de estilização com a inicialização do Tailwind
 │   ├── main.tsx: arquivo com a inicialização do React
 ├── index.html: arquivo com a estrutura da aplicação
+├── README.md: arquivo com informações do projeto
+├── server.json: banco de dados para a API REST (JSON-server)
 ```
 <br>
 
@@ -123,12 +130,14 @@ You can see the project online here.
 
 &emsp; &emsp; Precisa ter o [Node.js](https://nodejs.org/en/) instalado na sua máquina para rodar essa aplicação.
 
-&emsp; &emsp; Após clonar o repositório, acesse a pasta do projeto e execute os comandos: *npm install* e *npm run dev*.
+&emsp; &emsp; Após clonar o repositório, acesse a pasta do projeto e execute os comandos: *npm install*, *npm run server* e em outro terminal *npm run dev*.
 
 ```bash
   git clone https://github.com/MichelleCordeiro/nlw-expert-react-notes.git
 
   npm install
+
+  npm run server
 
   npm run dev
 ```
